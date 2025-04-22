@@ -57,13 +57,29 @@ function runTime() {
 }
 runTime();
 
+
+const bubbles =  document.querySelectorAll(".gole"); // All bubble divs inside
+
+bubbles.forEach(bubble => {
+  bubble.addEventListener("mouseenter", () => {
+    bubble.style.transform = "scale(1.1)";
+    bubble.style.border = " 2px solid blue";  
+    bubble.style.transition = "transform 0.2s ease";
+  });
+
+  bubble.addEventListener("mouseleave", () => {
+    bubble.style.transform = "scale(1)";
+    bubble.style.border = "none"
+  });
+});
+
+  
+
+  
 co.addEventListener("click", function (det) {
 
     targetedNo = det.target.textContent;
-
-    if(targetedNo == searchedNo){
-      det.target.style.backgroundColor = "blue";
-    }
+    
     if (targetedNo == searchedNo && t > 0) {
         number();
         addNumber();
