@@ -58,36 +58,56 @@ function runTime() {
 runTime();
 
 
-const bubbles =  document.querySelectorAll(".gole"); // All bubble divs inside
+const bubbles = document.querySelectorAll(".gole"); // All bubble divs inside
 
 bubbles.forEach(bubble => {
-  bubble.addEventListener("mouseenter", () => {
-    bubble.style.transform = "scale(1.1)";
-    bubble.style.border = " 2px solid blue";  
-    bubble.style.transition = "transform 0.2s ease";
-  });
+    bubble.addEventListener("mouseenter", () => {
+        bubble.style.transform = "scale(1.1)";
+        bubble.style.border = " 2px solid gray ";
+        bubble.style.transition = "transform 0.2s ease";
+    });
 
-  bubble.addEventListener("mouseleave", () => {
-    bubble.style.transform = "scale(1)";
-    bubble.style.border = "none"
-  });
+    bubble.addEventListener("mouseleave", () => {
+        bubble.style.transform = "scale(1)";
+        bubble.style.border = "none"
+    });
+    
 });
 
-  
 
-  
+
+
 co.addEventListener("click", function (det) {
-
     targetedNo = det.target.textContent;
-    
-    if (targetedNo == searchedNo && t > 0) {
-        number();
-        addNumber();
-        Score();
-        flage = true;
-    }
 
-})
+    if (targetedNo == searchedNo) {
+        det.target.textContent = " ";
+        det.target.style.backgroundImage = "url('correct.png')";
+        det.target.style.backgroundSize = "cover";
+        det.target.style.transform = "scale(1.1)";
+        det.target.style.transition = "transform 0.2s ease";
+    }
+    else{
+        det.target.style.backgroundImage = "url('wrong.png')";
+        det.target.style.backgroundSize = "cover";
+        setTimeout(() => {
+             det.target.style.backgroundImage = "none";
+        }, 300);
+        
+    }
+    
+    if (targetedNo == searchedNo) {
+        setTimeout(() => {
+            if (t > 0) {
+                number();
+                addNumber();
+                Score();
+                flage = true;
+            }
+        }, 300); // Delay in milliseconds (e.g., 300ms = 0.3 sec)
+    }
+});
+
 
 
 find.addEventListener("click", function () {
@@ -129,6 +149,7 @@ function addNumber() {
         }
 
         div.style.backgroundColor = "bisque";
+        div.style.backgroundImage = "none";
     });
 
     if (z == 1) {
