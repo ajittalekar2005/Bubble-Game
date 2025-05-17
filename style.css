@@ -1,99 +1,163 @@
     * {
-        margin: 0px;
-        padding: 0px;
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
     body {
+        margin: 0;
         height: 100vh;
         width: 100vw;
-        box-sizing: border-box;
         display: flex;
         align-items: center;
         justify-content: center;
+        background-color: #103d6a;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .game-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #bubble-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 2000; /* Higher than game-container */
     }
 
     .main {
-        height: 90vh;
-        width: 90vw;
-        box-sizing: border-box;
-        background-color: aqua;
-        border: solid blue 1px;
-    }
+    height: 90vh;
+    width: 90vw;
+    box-sizing: border-box;
+    border-radius: 15px;
+    position: relative;
+    z-index: 1;
+}
 
-    .header {
-        height: 15%;
-        width: 100%;
-        background-color: aquamarine;
-        border: solid brown 1px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
+.header {
+    height: 15%;
+    width: 100%;
+    background-color:  #34495e;
+    border-radius: 15px 15px 0px 0px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 
-    .fun {
-        height: 100%;
-        width: 33%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
+.fun {
+    height: 100%;
+    width: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
 
-    .para {
-        color: rgb(86, 84, 89);
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    }
+.para {
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
-    .val {
-        background-color: rgb(102, 215, 221);
-        border: solid rgb(0, 147, 192) 1px;
-        height: 30px;
-        width: 130px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+.val {
+    background-color: #2c3e50;
+    border: solid rgb(0, 147, 192) 1px;
+    height: 30px;
+    width: 130px;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: center;
+}
 
-    .cover {
-        border: solid red 1px;
-        width: 100%;
-        height: 85%;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        padding-left: 1px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* overflow: hidden; */
-    }
+.cover {
+    background-color: #2980b9;
+    background-image: linear-gradient(to right, #3498db, #2980b9);
+    width: 100%;
+    height: 85%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-left: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 0px 15px 15px;
+    padding: 2px;
+    /* overflow: hidden; */
+}
 
-    .gole {
-        height: 50px;
-        width: 50px;
-        background-color: bisque;
-        border-radius: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+.gole {
+    height: 50px;
+    width: 50px;
+    /* background-color: white; */
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: radial-gradient(
+                circle at 30% 30%,    /* Light spot at top-left (30%) */
+                rgba(255, 255, 255, 0.9),  /* Bright white center */
+                rgba(255, 255, 255, 0.4) 40%,  /* Fade to semi-transparent */
+                rgba(255, 255, 255, 0.2) 60%   /* More transparent at edges */
+            );
+}
 
-        cursor: pointer;
-    }
+#bu {
+    height: 43px;
+    width: 108px;
+    background-color: rgb(110, 219, 8);
+    color: white;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    #bu {
-        height: 43px;
-        width: 108px;
-        background-color: rgb(110, 219, 8);
-        color: white;
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+#bu:hover {
+    transform: translateY(-5px) scale(1.02);
+    transition: all 0.3s ease;
+    font-size: larger;
+}
 
-    #bu:hover {
-        transform: translateY(-5px) scale(1.02);
-        transition: all 0.3s ease;
-        font-size: larger;
+#hint {
+    color: white;
+}
+
+.bubble {
+    position: absolute;
+    bottom: -20px;
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0.4) 40%,
+        rgba(255, 255, 255, 0.2) 60%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    animation: rise var(--duration) ease-in forwards;
+    transform: translateX(var(--startX));
+    z-index: 1000;
+}
+
+@keyframes rise {
+    0% {
+        transform: translateY(0) translateX(var(--startX)) scale(1);
+        opacity: 1;
     }
+    100% {
+        transform: translateY(-100vh) translateX(calc(var(--startX) + var(--drift))) scale(1.2);
+        opacity: 0;
+    }
+}

@@ -7,6 +7,8 @@ var time = document.getElementById("time");
 var find = document.getElementById("bu");
 var hint = document.getElementById("hint");
 
+ var bubb = " radial-gradient(    circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4) 40%,rgba(255, 255, 255, 0.2) 60% )";
+
 var flage = true;
 
 var c = 5;
@@ -30,10 +32,12 @@ function Score() {
 number();
 
 function createCircle() {
-    for (var i = 0; i < 200; i++) {
+    for (var i = 0; i < 180; i++) {
         var div = document.createElement("div");
         div.className = "gole";
-        div.textContent = Math.floor(Math.random() * 100); // Generates a random number between 0-99
+        div.textContent = Math.floor(Math.random() * 100); 
+        if( i == 50)
+            div.textContent = no.textContent;
         co.appendChild(div);
     }
 }
@@ -63,7 +67,7 @@ const bubbles = document.querySelectorAll(".gole"); // All bubble divs inside
 bubbles.forEach(bubble => {
     bubble.addEventListener("mouseenter", () => {
         bubble.style.transform = "scale(1.1)";
-        bubble.style.border = " 2px solid gray ";
+        bubble.style.border = " 4px solid gray ";
         bubble.style.transition = "transform 0.2s ease";
     });
 
@@ -87,24 +91,32 @@ co.addEventListener("click", function (det) {
         det.target.style.transform = "scale(1.1)";
         det.target.style.transition = "transform 0.2s ease";
     }
-    else{
+    else if(det.target.className == "cover"){
+         det.style.backgroundColor =" #2980b9";
+
+    }
+    else {
         det.target.style.backgroundImage = "url('wrong.png')";
         det.target.style.backgroundSize = "cover";
         setTimeout(() => {
-             det.target.style.backgroundImage = "none";
+             det.target.style.background = "none";
+             det.target.style.background = " radial-gradient(    circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4) 40%,rgba(255, 255, 255, 0.2) 60% )";
+
         }, 300);
         
     }
     
     if (targetedNo == searchedNo) {
+    
         setTimeout(() => {
             if (t > 0) {
                 number();
+                z=1;
                 addNumber();
                 Score();
                 flage = true;
             }
-        }, 300); // Delay in milliseconds (e.g., 300ms = 0.3 sec)
+        }, 300); 
     }
 });
 
@@ -118,7 +130,8 @@ find.addEventListener("click", function () {
     all.forEach(div => {
 
         if (div.textContent == searchedNo && c > 0 && flage == true) {
-            div.style.backgroundColor = "white";
+            div.style.background = " radial-gradient(    circle at 30% 30%, rgb(237, 228, 228), rgba(241, 223, 223, 0.9) 40%,rgba(255, 255, 255, 0.5) 60% )";
+            div.style.border = "solid black 2px";
 
         }
 
@@ -144,12 +157,17 @@ function addNumber() {
     all.forEach(div => {
 
         div.textContent = Math.floor(Math.random() * 100);
-        if (Number(div.textContent) == searchedNo && z == 1) {
+        if (Number(div.textContent) == searchedNo ) {
             z = 0;
         }
 
-        div.style.backgroundColor = "bisque";
-        div.style.backgroundImage = "none";
+        // div.style.backgroundColor = "white";
+        // div.style.backgroundImage = "none";
+        // div.style.background = bubb;
+          div.style.background = " radial-gradient(    circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4) 40%,rgba(255, 255, 255, 0.2) 60% )";
+
+
+        div.style.border = "none";
     });
 
     if (z == 1) {
@@ -161,9 +179,49 @@ function addNumber() {
 
 function number() {
     no.textContent = Math.floor(Math.random() * 100);
-
     searchedNo = no.textContent;
 }
 
 
+let bubbleContainer = document.getElementById('bubble-container');
+if (!bubbleContainer) {
+    bubbleContainer = document.createElement('div');
+    bubbleContainer.id = 'bubble-container';
+    document.body.appendChild(bubbleContainer);
+}
+
+function createBubble() {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    
+    const size = Math.random() * 20 + 10;
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+    bubble.style.zIndex = 2000; 
+    
+  
+    const startX = Math.random() * 100;
+    bubble.style.setProperty('--startX', `${startX}vw`);
+    
+ 
+    const drift = (Math.random() - 0.5) * 20;
+    bubble.style.setProperty('--drift', `${drift}vw`);
+    
+
+    const duration = Math.random() * 4 + 4;
+    bubble.style.setProperty('--duration', `${duration}s`);
+    
+    bubbleContainer.appendChild(bubble);
+    
+    setTimeout(() => {
+        bubble.remove();
+    }, duration * 1000);
+}
+
+setInterval(createBubble, 300);
+
+
+for(let i = 0; i < 15; i++) {
+    createBubble();
+}
 
