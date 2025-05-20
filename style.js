@@ -67,7 +67,7 @@ const bubbles = document.querySelectorAll(".gole"); // All bubble divs inside
 bubbles.forEach(bubble => {
     bubble.addEventListener("mouseenter", () => {
         bubble.style.transform = "scale(1.1)";
-        bubble.style.border = " 4px solid gray ";
+        bubble.style.border = " 3px solid pink ";
         bubble.style.transition = "transform 0.2s ease";
     });
 
