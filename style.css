@@ -59,11 +59,10 @@
 .effect {
     position: absolute;
     height: 250%;
-    width: 100%;
+    width: 40%;
     border-radius: 15px;
     background: linear-gradient(90deg, #f0ec09, #3c08fb,pink,yellow,green);
     animation: rotate 3s infinite linear;
-    /* z-index: 5; */
 
 }
 .header {
